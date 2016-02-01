@@ -11,35 +11,35 @@
  *
  * This can be set to anything, but default usage is:
  *
+ *     local (default when developing locally)
  *     development
- *     testing
- *     production
+ *     production (default for remote deployment)
  *
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+	define('ENVIRONMENT', isset($_ENV['CI_ENV']) ? $_ENV['CI_ENV'] : 'local');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
  *---------------------------------------------------------------
  *
  * Different environments will require different levels of error reporting.
- * By default development will show errors but testing and live will hide them.
+ * By default development and local will show errors but production will hide them.
  */
 
 if (defined('ENVIRONMENT'))
 {
 	switch (ENVIRONMENT)
 	{
+		case 'local':
 		case 'development':
 			error_reporting(E_ALL);
-		break;
+			break;
 
-		case 'testing':
 		case 'production':
 			error_reporting(0);
-		break;
+			break;
 
 		default:
 			exit('The application environment is not set correctly.');
